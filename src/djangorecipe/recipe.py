@@ -79,12 +79,21 @@ class Recipe(object):
 
     def create_manage_script(self, extra_paths, ws):
         project = self.options.get('projectegg', self.options['project'])
+
+        # Allow to specify settings file outside of project module.
+        # Also provide possibility to specify root module by providing dot as
+        # first character.
+        if '.' in self.options['settings']:
+            settings = self.options['settings'].lstrip('.')
+        else:
+            settings = '%s.%s' % (project, self.options['settings'])
+
         return zc.buildout.easy_install.scripts(
             [(self.options.get('control-script', self.name),
               'djangorecipe.manage', 'main')],
             ws, self.options['executable'], self.options['bin-directory'],
             extra_paths=extra_paths,
-            arguments="'%s.%s'" % (project, self.options['settings']),
+            arguments="'%s'" % settings,
             initialization=self.options['initialization'])
 
     def create_test_runner(self, extra_paths, working_set):

@@ -137,6 +137,21 @@ class TestRecipe(BaseTestRecipe):
         self.assertTrue("djangorecipe.manage.main('project.spameggs')"
                         in open(manage).read())
 
+        # If settings contains dot, module name will be absolute:
+        self.recipe.options['settings'] = 'spam.eggs'
+        self.recipe.create_manage_script([], [])
+        manage = os.path.join(self.bin_dir, 'django')
+        self.assertTrue("djangorecipe.manage.main('spam.eggs')"
+                        in open(manage).read())
+
+        # All prepended dots are stripped from module name, making module
+        # absolute.
+        self.recipe.options['settings'] = '.spameggs'
+        self.recipe.create_manage_script([], [])
+        manage = os.path.join(self.bin_dir, 'django')
+        self.assertTrue("djangorecipe.manage.main('spameggs')"
+                        in open(manage).read())
+
     def test_create_project(self):
         # If a project does not exist already the recipe will create
         # one.

@@ -6,6 +6,9 @@ Changes
 
 - Added (pydev) initialization support. Thanks to anshumanb. (Closes #58).
 
+- Added possibility to specify settings module outside of project module.
+  (Closes #52).
+
 
 1.3 (2012-09-07)
 ----------------

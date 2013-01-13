@@ -58,6 +58,15 @@ settings
   production setup from your development setup. It defaults to
   `development`.
 
+  If specified module name does not contains dots, it is expected, that
+  settings module is submodule of you project. For example if you project or
+  projectegg name is `myproject`, then by default settings module will be
+  `myproject.development`.
+
+  If you want to specify absolute module name outside project module, you can
+  prepend it with single dot, for example: `.mysettings`, dot will be stripped
+  and settings will be searched in absolute `mysettings` module.
+
 extra-paths
   All paths specified here will be used to extend the default Python
   path for the `bin/*` scripts.
